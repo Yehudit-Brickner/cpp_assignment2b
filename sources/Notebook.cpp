@@ -13,32 +13,12 @@ using namespace std;
 
      
 
-
-
-
-
-    // void ariel::Notebook::write(  int page, int row,  int column, Direction d, string txt){
-    //     cout << "this function should write somthing" << endl;
-    // }
-    // string ariel::Notebook::read( int page,  int row,  int column, Direction d,  int length){
-    //     cout << "this function should read somthing" << endl;
-    //     return "somthing";
-    // }
-    // void ariel::Notebook::erase( int page,  int row,  int column, Direction d,  int length){
-    //     cout << "this function should erase somthing" << endl;
-    // }
-    // void ariel::Notebook::show( int page){
-    //     cout << "this function should show somthing" << endl;
-    // }
-
-
-
-
-
     void ariel::Notebook::write(  int page, int row,  int column, Direction d, string txt){
         
         const int minsymb=32;
         const int maxsymb=125;
+        const int max=100;
+        int txt_length=txt.length(); 
 
         if(page<0 ||row<0 ||column<0){
             throw std::invalid_argument( "the page or row or column is negative" );
@@ -49,11 +29,6 @@ using namespace std;
                 throw std::invalid_argument( "the text has an illegal symbol" );  
             }
         }
-        
-        //cout << "this function should write" << endl;
-
-        const int max=100;
-        int txt_length=txt.length(); 
 
         if(d==Direction::Horizontal){
             if (column+txt_length>=max){
@@ -89,14 +64,11 @@ using namespace std;
 
     string ariel::Notebook::read( int page, int row, int column, Direction d, int length){
          
-
         if(page<0 ||row<0 ||column<0 || length<0){
             throw std::invalid_argument( "the page or row or column or length is negative" );
         }
-      
 
         //cout << "this function should read" << endl;
-        
         
         const int max=100;
         if(d==Direction::Horizontal){
@@ -159,7 +131,6 @@ using namespace std;
          
         //cout << "this function should erase" << endl;
         
-        
         const int max=100; 
         if(d==Direction::Horizontal){
             if (column+length>=max){
@@ -182,7 +153,6 @@ using namespace std;
                 _NotebookPageMap[page]._PageRowMap[i]._row[column]='~'; 
             }   
         }
-    
     }
 
     void ariel::Notebook::show( int page){
