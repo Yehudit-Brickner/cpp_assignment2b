@@ -33,18 +33,20 @@ using namespace std;
         }
 
         if(d==Direction::Horizontal){
-            if (column+txt_length>=max){
+            if (column+txt_length>max){
                 // cout<< "threw exception"<< endl;
                 throw std::invalid_argument( "the text goes out of bound of the row" );
             }
         }
         else{
-            if (column>max){
+            if (column>=max){
                 // cout<< "threw exception"<< endl;
                 throw std::invalid_argument( "the text goes out of bound of the row" );  
             }
         }
+
         std::string reading=ariel::Notebook::read(page,row,column,d,txt.size());
+
         for( std::string::size_type i = 0; i < txt.size(); i++){
             if(reading[i]!='_'){
                 // cout<< "threw exception"<< endl;
@@ -52,14 +54,15 @@ using namespace std;
             }
         }
         if (d==Direction::Horizontal){
-             std::string::size_type j=0;
-            for( int i=column; i<column+txt_length;i++){
+            std::string::size_type j=0;
+            for(int i=column; i<column+txt_length;i++){
                 unsigned long k=(unsigned long)i;
                 // _NotebookPageMap[page]._PageRowMap[row]._row[k]=txt[j];   
                 _NotebookPageMap[page]._PageRowMap[row][k]=txt[j];
                 j++;
             } 
         }
+        //vertical
         else{
             std::string::size_type j=0; 
             for( int i=row; i<row+txt_length;i++){
@@ -73,108 +76,62 @@ using namespace std;
     }
 
     string ariel::Notebook::read( int page, int row, int column, Direction d, int length){
-        // cout<< "start reading"<< endl;
+        
         if(page<0 ||row<0 ||column<0 || length<0){
-            //  cout<< "threw exception"<< endl;
             throw std::invalid_argument( "the page or row or column or length is negative" );
         }
 
-        //cout << "this function should read" << endl;
-        
         const int max=100;
         if(d==Direction::Horizontal){
-            if (column+length>max){
-                //  cout<< "threw exception"<< endl;
+            if(column>=max || column+length>max){
                 throw std::invalid_argument( "the text goes out of bound of the row" );
             }
         }
         else{
-            if (column>max){
-                //  cout<< "threw exception"<< endl;
+            if (column>=max){
               throw std::invalid_argument( "the text goes out of bound of the row" );  
             }
         }
-    
-        // check if page exsists, if not add the page
-        // cout<< "checking page"<< endl;
+
         if(_NotebookPageMap.find(page)==_NotebookPageMap.end()){ 
             Page p;
             _NotebookPageMap.insert( pair< int, Page>(page, p)); 
         }    
-        // cout<< "finish checking page"<< endl;
+ 
         std::string ans;
 
         //horizantal
         if (d==Direction::Horizontal){
             if(_NotebookPageMap[page]._PageRowMap.find(row)==_NotebookPageMap[page]._PageRowMap.end()){
-                // Row r;
-                // r.start();
-                // cout<< 2;
-                
-                // _NotebookPageMap[page]._PageRowMap.insert(pair< int,Row>(row,r));
                 _NotebookPageMap[page].addRow(row);
-                // Row row1=_NotebookPageMap[page]._PageRowMap[row];
-                // cout<< "prow"<<endl;
-                // row1._row[0]='_';
-                // row1.print();
-                // cout<< 3;
-                for(  int i=column; i<column+length;i++){
-                    // cout<< 4;
+                for( int i=column; i<column+length;i++){
                     unsigned long k=(unsigned long)i;
-                    // cout<< 5;
-                    // std::vector<char>* v=&_NotebookPageMap[page]._PageRowMap[row];
-                    // std::vector<char> copy= *v;
-                    // cout << copy.size()<< endl;
-                    // cout<<copy[0];
-                    char c=_NotebookPageMap[page]._PageRowMap[row][k];
-                    cout<< c;
-                  
                     ans.push_back(_NotebookPageMap[page]._PageRowMap[row][k]);
-                    // ans.push_back(_NotebookPageMap[page]._PageRowMap[row]._row.at(k));
-                    cout<< 6<<endl;
                 }   
             }
             else{
                 for(int i=column; i<column+length;i++){
-                    // cout <<7;
                     unsigned long k=(unsigned long)i;
-                    // cout <<8<< endl;
-                    // Row prow=_NotebookPageMap[page]._PageRowMap[row];
-                    // cout<< "prow"<<endl;
-                    // prow.print();
-                    // char c=_NotebookPageMap[page]._PageRowMap[row]._row.at(k);
-                    // cout << c;
-                    // ans.push_back(_NotebookPageMap[page]._PageRowMap[row]._row.at(k));
                     ans.push_back(_NotebookPageMap[page]._PageRowMap[row][k]);
-                    // cout <<9<<endl;
                 } 
             }
-            return ans;
         }
+        
         //vertical
-        for ( int i=row; i<row+length;i++){
-            if(_NotebookPageMap[page]._PageRowMap.find(i)==_NotebookPageMap[page]._PageRowMap.end()){
-
-
-                // Row r;
-                // r.start();
-                // _NotebookPageMap[page]._PageRowMap.insert(pair< int,Row>(i,r));
-                _NotebookPageMap[page].addRow(i);
-                // Row prow=_NotebookPageMap[page]._PageRowMap[i];
-                // prow.print();
-                unsigned long k=(unsigned long)column;
-                //ans.push_back(_NotebookPageMap[page]._PageRowMap[i]._row.at(k));
-                ans.push_back(_NotebookPageMap[page]._PageRowMap[i][k]);
-            }
-            else{
-                unsigned long k=(unsigned long)column;
-                //ans.push_back(_NotebookPageMap[page]._PageRowMap[i]._row.at(k));
-                ans.push_back(_NotebookPageMap[page]._PageRowMap[i][k]);
+        else{
+            for ( int i=row; i<row+length;i++){
+                if(_NotebookPageMap[page]._PageRowMap.find(i)==_NotebookPageMap[page]._PageRowMap.end()){
+                    _NotebookPageMap[page].addRow(i);
+                    unsigned long k=(unsigned long)column;
+                    ans.push_back(_NotebookPageMap[page]._PageRowMap[i][k]);
+                }
+                else{
+                    unsigned long k=(unsigned long)column;
+                    ans.push_back(_NotebookPageMap[page]._PageRowMap[i][k]);
+                }
             }
         }
-        // cout << "finished reading"<< endl;
         return ans;
-        //return "somthing";
     
     }
 
@@ -182,39 +139,69 @@ using namespace std;
     void ariel::Notebook::erase( int page,  int row,  int column, Direction d, int length){
 
          if(page<0 ||row<0 ||column<0 || length<0){
-            //   cout<< "threw exception"<< endl;
             throw std::invalid_argument( "the page or row or column or length is negative" );
         }
          
-        //cout << "this function should erase" << endl;
         
         const int max=100; 
         if(d==Direction::Horizontal){
-            if (column+length>=max){
-                //  cout<< "threw exception"<< endl;
+            if (column+length>max){
                 throw std::invalid_argument( "the text goes out of bound of the row" );
             }
         }
         else{
             if (column>=max){
-                //  cout<< "threw exception"<< endl;
                 throw std::invalid_argument( "the text goes out of bound of the row" );  
             }
         }
-      
+
+         if(_NotebookPageMap.find(page)==_NotebookPageMap.end()){ 
+            Page p;
+            _NotebookPageMap.insert( pair< int, Page>(page, p)); 
+        }  
+
+        // if (d==Direction::Horizontal){
+        //     for( int i=column; i<column+length;i++){
+        //         unsigned long k=(unsigned long)i;
+        //        _NotebookPageMap[page]._PageRowMap[row][k]='~';
+        //     } 
+        // }
+        // //vertical
+        // else{
+        //     for( int i=row; i<row+length;i++){
+        //         unsigned long k=(unsigned long)column;
+        //         _NotebookPageMap[page]._PageRowMap[i][k]='~'; 
+        //     }   
+        // }
         if (d==Direction::Horizontal){
-            for( int i=column; i<column+length;i++){
-                unsigned long k=(unsigned long)i;
-               // _NotebookPageMap[page]._PageRowMap[row]._row[k]='~';
-               _NotebookPageMap[page]._PageRowMap[row][k]='~';
-            } 
+            if(_NotebookPageMap[page]._PageRowMap.find(row)==_NotebookPageMap[page]._PageRowMap.end()){
+                _NotebookPageMap[page].addRow(row);
+                for( int i=column; i<column+length;i++){
+                     unsigned long k=(unsigned long)i;
+                    _NotebookPageMap[page]._PageRowMap[row][k]='~';
+                }   
+            }
+            else{
+                for(int i=column; i<column+length;i++){
+                    unsigned long k=(unsigned long)i;
+                    _NotebookPageMap[page]._PageRowMap[row][k]='~'; 
+                } 
+            }
         }
+        
+        //vertical
         else{
-            for( int i=row; i<row+length;i++){
-                unsigned long k=(unsigned long)column;
-               // _NotebookPageMap[page]._PageRowMap[i]._row[k]='~'; 
-                _NotebookPageMap[page]._PageRowMap[i][k]='~'; 
-            }   
+            for ( int i=row; i<row+length;i++){
+                if(_NotebookPageMap[page]._PageRowMap.find(i)==_NotebookPageMap[page]._PageRowMap.end()){
+                    _NotebookPageMap[page].addRow(i);
+                    unsigned long k=(unsigned long)column;
+                    _NotebookPageMap[page]._PageRowMap[i][k]='~';
+                }
+                else{
+                    unsigned long k=(unsigned long)column;
+                    _NotebookPageMap[page]._PageRowMap[i][k]='~';
+                }
+            }
         }
     }
 
