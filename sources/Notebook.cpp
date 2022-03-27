@@ -215,10 +215,10 @@ using namespace std;
         //cout << "this function should show" << endl;
         if(_NotebookPageMap.find(page)==_NotebookPageMap.end()){
             cout << "this page has not been created"<<endl;
-            cout << "do you want to create it? \n  reply 0 for yes, 1 for no"<<endl;
-            int ans=1;
+            cout << "do you want to create it? \n  reply y for yes, n for no"<<endl;
+            char ans='n';
             cin >> ans;
-            if (ans==0){
+            if (ans=='y'){
                 Page p;
                 // _NotebookPageMap.insert(pair< int,Page>(0,p));
                 // Row r;
@@ -231,10 +231,10 @@ using namespace std;
             }
         }
         else{
-            int ans=0;
+            char ans='y';
             int start=0;
             int end=intraval;
-            while (ans ==0){
+            while (ans =='y'){
                 cout << "printing the first 50 rows that have been used"<< endl;
                 for (int i=start; i<end;i++){
                     if(_NotebookPageMap[page]._PageRowMap.find(i)!=_NotebookPageMap[page]._PageRowMap.end()){
@@ -243,7 +243,7 @@ using namespace std;
                         cout<< line<< endl; 
                     }
                 }
-                cout << "do you want to print the next 50 used rows? \n  reply 0 for yes, 1 for no"<< endl;
+                cout << "do you want to print the next 50 used rows? \n  reply y for yes, n for no"<< endl;
                 cin >> ans;
                 start=start+intraval;
                 end=end+intraval;
