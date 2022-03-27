@@ -16,6 +16,7 @@ OBJECTS=$(subst sources/,objects/,$(subst .cpp,.o,$(SOURCES)))
 
 run: test1 test2 test3
 
+
 test1: TestRunner.o StudentTest1.o  $(OBJECTS)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
@@ -32,7 +33,7 @@ $(OBJECT_PATH)/%.o: $(SOURCE_PATH)/%.cpp $(HEADERS)
 	$(CXX) $(CXXFLAGS) --compile $< -o $@
 
 StudentTest1.cpp:  # Aviad Gilboa
-	curl https://raw.githubusercontent.com/Avgilboa/notebook-a/main/Test.cpp > $@
+	curl https://raw.githubusercontent.com/Avgilboa/notebook-./testa/main/Test.cpp > $@
 
 StudentTest2.cpp:  # Orel Zelmer
 	curl https://raw.githubusercontent.com/orelz890/Ex2_cpp_a/main/Test.cpp > $@

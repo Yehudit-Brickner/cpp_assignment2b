@@ -29,17 +29,17 @@ namespace ariel{
            
                        
             
-            void addPage(  int num){
+            void addPage( int num){
                 if(_NotebookPageMap.find(num)==_NotebookPageMap.end()){ // check if the page exsits
                     Page p;
                     _NotebookPageMap.insert( pair<int, Page>(num, p)); // if not create new page
                 }
             }
 
-            
-            Notebook(){
-                addPage(0);
-            }
+            // //constructer
+            // Notebook(){
+            //     addPage(0);
+            // }
     };
 
 }; 

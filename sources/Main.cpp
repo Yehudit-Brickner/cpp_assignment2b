@@ -11,10 +11,10 @@ using ariel::Direction;
 
 
 
-int main(){
+// int main(){
     
-   ariel::Notebook notebook1;
-   notebook1.write(/*page*/0,  /*row*/0,  /*column*/0,  Direction::Horizontal,"hello world");
-   // notebook1.read(/*page*/0,  /*row*/0,  /*column*/0,  Direction::Horizontal,11);
-   return 0;
-}
+//    ariel::Notebook notebook1;
+//    notebook1.write(/*page*/0,  /*row*/0,  /*column*/0,  Direction::Horizontal,"hello world");
+//    // notebook1.read(/*page*/0,  /*row*/0,  /*column*/0,  Direction::Horizontal,11);
+//    return 0;
+// }
