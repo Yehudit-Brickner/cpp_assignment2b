@@ -56,23 +56,20 @@ using namespace std;
         if (d==Direction::Horizontal){
             std::string::size_type j=0;
             for(int i=column; i<column+txt_length;i++){
-                unsigned long k=(unsigned long)i;
-                // _NotebookPageMap[page]._PageRowMap[row]._row[k]=txt[j];   
+                unsigned long k=(unsigned long)i;   
                 _NotebookPageMap[page]._PageRowMap[row][k]=txt[j];
                 j++;
             } 
         }
-        //vertical
         else{
             std::string::size_type j=0; 
             for( int i=row; i<row+txt_length;i++){
                 unsigned long k=(unsigned long)column;
-               // _NotebookPageMap[page]._PageRowMap[i]._row[k]=txt[j]; 
                _NotebookPageMap[page]._PageRowMap[i][k]=txt[j];
                 j++; 
             } 
         }
-        // cout<< "finish writing"<< endl;
+       
     }
 
     string ariel::Notebook::read( int page, int row, int column, Direction d, int length){
@@ -214,11 +211,11 @@ using namespace std;
         }
         //cout << "this function should show" << endl;
         if(_NotebookPageMap.find(page)==_NotebookPageMap.end()){
-            cout << "this page has not been created"<<endl;
-            cout << "do you want to create it? \n  reply y for yes, n for no"<<endl;
-            char ans='n';
-            cin >> ans;
-            if (ans=='y'){
+            // cout << "this page has not been created"<<endl;
+            // cout << "do you want to create it? \n  reply y for yes, n for no"<<endl;
+            // char ans='n';
+            // cin >> ans;
+            // if (ans=='y'){
                 Page p;
                 // _NotebookPageMap.insert(pair< int,Page>(0,p));
                 // Row r;
@@ -228,7 +225,7 @@ using namespace std;
                 cout <<"row 0: " ;
                 string line =read(/*page*/page,  /*row*/0,  /*column*/0,  Direction::Horizontal,max);
                 cout<< line<< endl;  
-            }
+            // }
         }
         else{
             char ans='y';
