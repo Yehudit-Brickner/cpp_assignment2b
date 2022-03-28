@@ -206,26 +206,17 @@ using namespace std;
         const int max=100;
         const int intraval =50;
         if(page<0 ){
-            //  cout<< "threw exception"<< endl;
             throw std::invalid_argument( "the page is negative" );
         }
-        //cout << "this function should show" << endl;
         if(_NotebookPageMap.find(page)==_NotebookPageMap.end()){
-            // cout << "this page has not been created"<<endl;
-            // cout << "do you want to create it? \n  reply y for yes, n for no"<<endl;
-            // char ans='n';
-            // cin >> ans;
-            // if (ans=='y'){
                 Page p;
-                // _NotebookPageMap.insert(pair< int,Page>(0,p));
-                // Row r;
-                //_NotebookPageMap[page]._PageRowMap.insert(pair< int,Row>(0,r));
+                _NotebookPageMap.insert(pair< int,Page>(0,p));
                 _NotebookPageMap[page].addRow(0);
                 cout << "page number" << page <<endl;
                 cout <<"row 0: " ;
                 string line =read(/*page*/page,  /*row*/0,  /*column*/0,  Direction::Horizontal,max);
                 cout<< line<< endl;  
-            // }
+        
         }
         else{
             char ans='y';
